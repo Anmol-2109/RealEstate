@@ -1,6 +1,7 @@
 package com.RealState.Project.Entity;
 
-import com.RealEstate.realEstate.Enums.Status;
+
+import com.RealState.Project.Entity.Type.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

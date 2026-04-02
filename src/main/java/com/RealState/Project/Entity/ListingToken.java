@@ -2,17 +2,17 @@ package com.RealState.Project.Entity;
 
 import com.RealState.Project.Entity.Type.Listing_type;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @ToString
 public class ListingToken {
     @Id

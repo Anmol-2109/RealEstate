@@ -89,3 +89,12 @@ VALUES
 ('Offer placed','GENERAL','UNREAD',2,1),
 ('New listing','PROPERTY','READ',3,4),
 ('Meeting scheduled','PROPERTY','UNREAD',2,5);
+
+
+INSERT INTO transaction
+(amount,type,mode,aid,token_id,buyer_id)
+VALUES
+(5000000,'FULL','ONLINE',2,1,1),
+(20000,'ADVANCE','CARD',3,2,4),
+(7500000,'ADVANCE','ONLINE',2,3,5),
+(3500000,'FULL','BANK_TRANSFER',3,4,6);

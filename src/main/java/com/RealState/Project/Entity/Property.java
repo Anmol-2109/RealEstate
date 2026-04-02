@@ -2,12 +2,12 @@ package com.RealState.Project.Entity;
 import com.RealState.Project.Entity.Type.Property_type;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @ToString
 @Entity
 public class Property {

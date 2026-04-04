@@ -41,5 +41,6 @@ public class ListingToken {
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "aid")   // FK column in listing_token
-    private Agent agent_id;
+    private Agent agentId;
+
 }

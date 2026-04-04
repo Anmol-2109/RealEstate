@@ -24,4 +24,5 @@ public class Office {
 
     @Column(nullable = false)
     private String city;
+
 }

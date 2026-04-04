@@ -18,5 +18,4 @@ public class TransactionRequestDTO {
     private Long agentId;
     private Long buyerId;
     private Long tokenId;
-
 }

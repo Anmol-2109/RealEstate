@@ -41,13 +41,13 @@ public class Property {
     private int BHK;
 
     @Column(length=4)
-    private int year_built;
+    private int yearBuilt;
 
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
     @JoinColumn(name="ownerId")
-    private User owner_id;
+    private User ownerId;
 
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
     @JoinColumn(name = "officeId")
-    private Office office_id;
+    private Office officeId;
 }

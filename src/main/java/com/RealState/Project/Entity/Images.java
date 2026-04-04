@@ -27,4 +27,5 @@ public class Images {
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name="pid")
     private Property propertyId;
+
 }

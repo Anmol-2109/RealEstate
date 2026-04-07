@@ -169,7 +169,7 @@ public class OfficeServiceImpl implements OfficeService {
                 .findByPidOfficeId(office.getId())
                 .stream()
                 .map(l -> ListingDTO.builder()
-                        .id(l.getToken_id())
+                        .id(l.getId())
                         .price(l.getPrice())
                         .status(l.getStatus())
                         .build())

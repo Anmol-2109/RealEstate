@@ -34,7 +34,7 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
         return listingTokenRepository.findAll()
                 .stream()
                 .map(token -> ListingTokenResponseDTO.builder()
-                        .tokenId(token.getToken_id())
+                        .tokenId(token.getId())
                         .listingDate(token.getListingDate())
                         .listingType(token.getListingType())
                         .price(token.getPrice())
@@ -88,7 +88,7 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
         ListingToken saved = listingTokenRepository.save(listing);
 
         return ListingTokenResponseDTO.builder()
-                .tokenId(saved.getToken_id())
+                .tokenId(saved.getId())
                 .listingDate(saved.getListingDate())
                 .listingType(saved.getListingType())
                 .price(saved.getPrice())
@@ -107,7 +107,7 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
                 .orElseThrow(() -> new RuntimeException("Listing not found"));
 
         return ListingTokenResponseDTO.builder()
-                .tokenId(listing.getToken_id())
+                .tokenId(listing.getId())
                 .listingDate(listing.getListingDate())
                 .listingType(listing.getListingType())
                 .price(listing.getPrice())
@@ -148,7 +148,7 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
         ListingToken saved = listingTokenRepository.save(listing);
 
         return ListingTokenResponseDTO.builder()
-                .tokenId(saved.getToken_id())
+                .tokenId(saved.getId())
                 .listingDate(saved.getListingDate())
                 .listingType(saved.getListingType())
                 .price(saved.getPrice())
@@ -202,7 +202,7 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
     private ListingTokenResponseDTO convertToDTO(ListingToken listing){
 
         return ListingTokenResponseDTO.builder()
-                .tokenId(listing.getToken_id())
+                .tokenId(listing.getId())
                 .listingDate(listing.getListingDate())
                 .listingType(listing.getListingType())
                 .price(listing.getPrice())

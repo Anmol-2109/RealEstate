@@ -35,14 +35,14 @@ public class Transaction {
     private Transaction_Mode mode;
 
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
-    @JoinColumn(name = "aid")   // FK column in listing_token
+    @JoinColumn(name = "agent_id")   // FK column in listing_token
     private Agent agent;
 
     @OneToOne(cascade = CascadeType.PERSIST,optional = false,orphanRemoval = true)
-    @JoinColumn(name="tokenId")
+    @JoinColumn(name="token_id")
     private ListingToken token;
 
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
-    @JoinColumn(name = "buyerId")
+    @JoinColumn(name = "buyer_id")
     private User buyer;
 }

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class ListingToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int token_id;
+    private int id;
 
     @CreationTimestamp
     private LocalDate listingDate;
@@ -39,12 +39,12 @@ public class ListingToken {
     private Status status;
 
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
-    @JoinColumn(name="pid")
+    @JoinColumn(name="property_id")
     @JsonIgnore
     private Property pid;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "aid")
+    @JoinColumn(name = "agent_id")
     @JsonIgnore
     private Agent agent;
 }

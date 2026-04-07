@@ -68,7 +68,7 @@ VALUES
 ('E501','Sector 18','Central','Noida',201301,1300,'FLAT',6,2016,14,11);
 
 INSERT INTO listing_token
-(list_type,price,description,status,pid,aid)
+(list_type,price,description,status,property_id,agent_id)
 VALUES
 ('SELL',5000000,'Luxury Flat','ACTIVE',1,2),
 ('RENT',20000,'Nice Apartment','ACTIVE',2,3),
@@ -76,7 +76,7 @@ VALUES
 ('SELL',3500000,'2BHK','ACTIVE',4,3);
 
 INSERT INTO performance
-(deals,total_sales,score,user_rating,deals_left,aid)
+(deals,total_sales,score,user_rating,deals_left,agent_id)
 VALUES
 (10,5000000,8.5,4.5,2,2),
 (8,3000000,7.5,4.0,1,3);
@@ -99,7 +99,7 @@ VALUES
 
 
 INSERT INTO transaction
-(amount,type,mode,aid,token_id,buyer_id)
+(amount,type,mode,agent_id,token_id,buyer_id)
 VALUES
 (5000000,'FULL','ONLINE',2,1,1),
 (20000,'ADVANCE','CARD',3,2,4),

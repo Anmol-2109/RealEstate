@@ -87,7 +87,7 @@ public class AuthService {
         String token = authUtil.generateToken(user);
         RefreshToken refreshToken = refreshTokenService.createOrUpdateRefreshToken(user);
 
-        return new LoginResponseDTO(token,refreshToken.getToken(),user.getUsername());
+        return new LoginResponseDTO(token,refreshToken.getToken(),user.getUsername(),user.getId());
     }
 
     public LoginResponseDTO refreshToken(RefreshTokenRequestDTO dto){
@@ -107,7 +107,8 @@ public class AuthService {
         return new LoginResponseDTO(
                 accessToken,
                 newToken.getToken(),
-                user.getUsername()
+                user.getUsername(),
+                user.getId()
         );
     }
 
@@ -148,7 +149,7 @@ public class AuthService {
 
         LoginResponseDTO loginResponseDTO  = new LoginResponseDTO(authUtil.generateToken(user),
                 refreshTokenService.createOrUpdateRefreshToken(user).getToken()
-                ,user.getUsername());
+                ,user.getUsername(),user.getId());
 
         return ResponseEntity.ok(loginResponseDTO);
 

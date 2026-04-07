@@ -30,6 +30,6 @@ public class Performance {
     private int deals_left;
 
     @OneToOne(cascade = CascadeType.ALL,optional = false,orphanRemoval = true)
-    @JoinColumn(name = "aid")   // FK column in listing_token
+    @JoinColumn(name = "agent_id")   // FK column in listing_token
     private Agent agent;
 }

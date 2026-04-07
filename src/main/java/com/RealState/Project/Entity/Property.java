@@ -47,11 +47,11 @@ public class Property {
     private int year_built;
 
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
-    @JoinColumn(name="ownerId")
+    @JoinColumn(name="owner_id")
     @JsonIgnore
     private User owner;
 
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
-    @JoinColumn(name = "officeId")
+    @JoinColumn(name = "office_id")
     private Office office;
 }

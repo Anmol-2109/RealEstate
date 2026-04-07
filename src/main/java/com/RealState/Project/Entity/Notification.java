@@ -39,10 +39,10 @@ public class Notification {
     private Notification_status status;
 
     @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
-    @JoinColumn(name="senderId")
+    @JoinColumn(name="sender_id")
     private User sid;
 
     @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
-    @JoinColumn(name="receiverId")
+    @JoinColumn(name="receiver_id")
     private User rid;
 }

@@ -11,4 +11,5 @@ public class LoginResponseDTO {
     String jwt;
     String refresh;
     String username;
+    Long id;
 }

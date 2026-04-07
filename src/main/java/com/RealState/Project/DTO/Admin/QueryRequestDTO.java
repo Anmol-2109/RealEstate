@@ -6,6 +6,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryRequestDTO {
-
     private String query;
 }

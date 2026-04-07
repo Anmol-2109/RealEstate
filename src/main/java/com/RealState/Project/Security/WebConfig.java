@@ -1,4 +1,5 @@
 package com.RealState.Project.Security;
+
 import jakarta.servlet.Filter;
 import jakarta.validation.MessageInterpolator;
 import lombok.RequiredArgsConstructor;
@@ -18,65 +19,61 @@ import java.net.ContentHandler;
 @Slf4j
 public class WebConfig {
 
-    private final AuthFilter authFilter;
-    private final OAuthSuccessHandler oAuthSuccessHandler;
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
-        httpSecurity
-                .cors(Customizer.withDefaults())
-                .csrf(csrfConfig->csrfConfig.disable())
-                .sessionManagement(session->session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+  private final AuthFilter authFilter;
+  private final OAuthSuccessHandler oAuthSuccessHandler;
 
-                .exceptionHandling(ex -> ex
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
+    httpSecurity
+        .cors(Customizer.withDefaults())
+        .csrf(csrfConfig -> csrfConfig.disable())
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                        // 401 — Authentication required
-                        .authenticationEntryPoint((request, response, authException) -> {
+        .exceptionHandling(ex -> ex
 
-                            response.setStatus(401);
-                            response.setContentType("application/json");
+            // 401 — Authentication required
+            .authenticationEntryPoint((request, response, authException) -> {
 
-                            response.getWriter().write("""
-                        {
-                          "status":401,
-                          "message":"Authentication Required"
-                        }
-                        """);
-                        })
+              response.setStatus(401);
+              response.setContentType("application/json");
 
-                        // 403 — Access denied
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+              response.getWriter().write("""
+                  {
+                    "status":401,
+                    "message":"Authentication Required"
+                  }
+                  """);
+            })
 
-                            response.setStatus(403);
-                            response.setContentType("application/json");
+            // 403 — Access denied
+            .accessDeniedHandler((request, response, accessDeniedException) -> {
 
-                            response.getWriter().write("""
-                        {
-                          "status":403,
-                          "message":"Access Denied"
-                        }
-                        """);
-                        })
-                )
+              response.setStatus(403);
+              response.setContentType("application/json");
 
+              response.getWriter().write("""
+                  {
+                    "status":403,
+                    "message":"Access Denied"
+                  }
+                  """);
+            }))
 
-                .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/public/**","/auth/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/agent/**").hasRole("AGENT")
-                        .requestMatchers("/user/**").hasRole("USER")
-                        .anyRequest().authenticated()
-                )
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/public/**", "/auth/**").permitAll()
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers("/agent/**").hasRole("AGENT")
+            .requestMatchers("/user/**").hasRole("USER")
+            .anyRequest().authenticated())
 
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(oAuth->oAuth.failureHandler(
-                        (request, response, exception) ->{
-                            log.error("Oauth2 error :{}",exception.getMessage());
-                        }
-                ).successHandler(oAuthSuccessHandler));
-//               .formLogin(Customizer.withDefaults());
-        return httpSecurity.build();
-    }
-
+        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+        .oauth2Login(oAuth -> oAuth.failureHandler(
+            (request, response, exception) -> {
+              log.error("Oauth2 error :{}", exception.getMessage());
+            }).successHandler(oAuthSuccessHandler));
+    // .formLogin(Customizer.withDefaults());
+    return httpSecurity.build();
+  }
 
 }

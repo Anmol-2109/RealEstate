@@ -79,13 +79,11 @@ public class AuthService {
         );
 
         User user = (User)authentication.getPrincipal();
-
         if (user.getUserProfile().getUserType() != dto.getUserType()) {
             throw new AccessDeniedException(
                     "Invalid login type. You are not " + dto.getUserType()
             );
         }
-
         String token = authUtil.generateToken(user);
         RefreshToken refreshToken = refreshTokenService.createOrUpdateRefreshToken(user);
 

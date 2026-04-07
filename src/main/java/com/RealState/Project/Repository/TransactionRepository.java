@@ -1,5 +1,6 @@
 package com.RealState.Project.Repository;
 
+import com.RealState.Project.DTO.RevenuePointDTO;
 import com.RealState.Project.Entity.Agent;
 import com.RealState.Project.Entity.Office;
 import com.RealState.Project.Entity.Transaction;
@@ -9,6 +10,7 @@ import com.RealState.Project.Entity.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -195,6 +197,201 @@ SELECT t FROM Transaction t
 ORDER BY t.transactionDate DESC
 """)
     List<Transaction> findRecentTransactions(Pageable pageable);
+
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT('', FUNCTION('YEAR', t.transactionDate)),
+    SUM(t.amount * 1.0)
+)
+FROM Transaction t
+WHERE t.transactionDate BETWEEN :from AND :to
+GROUP BY CONCAT('', FUNCTION('YEAR', t.transactionDate))
+ORDER BY CONCAT('', FUNCTION('YEAR', t.transactionDate))
+""")
+    List<RevenuePointDTO> adminYearlyRevenue(
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to
+    );
+
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT(
+        'Week ',
+        FUNCTION('YEAR', t.transactionDate),
+        '-',
+        FUNCTION('WEEK', t.transactionDate)
+    ),
+    SUM(t.amount * 1.0)
+)
+FROM Transaction t
+WHERE t.transactionDate BETWEEN :from AND :to
+GROUP BY CONCAT(
+        'Week ',
+        FUNCTION('YEAR', t.transactionDate),
+        '-',
+        FUNCTION('WEEK', t.transactionDate)
+)
+ORDER BY CONCAT(
+        'Week ',
+        FUNCTION('YEAR', t.transactionDate),
+        '-',
+        FUNCTION('WEEK', t.transactionDate)
+)
+""")
+    List<RevenuePointDTO> adminWeeklyRevenue(
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to
+    );
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT(
+        FUNCTION('YEAR', t.transactionDate),
+        '-',
+        FUNCTION('MONTH', t.transactionDate)
+    ),
+    SUM(t.amount * 1.0)
+)
+FROM Transaction t
+WHERE t.transactionDate BETWEEN :from AND :to
+GROUP BY CONCAT(
+        FUNCTION('YEAR', t.transactionDate),
+        '-',
+        FUNCTION('MONTH', t.transactionDate)
+)
+ORDER BY CONCAT(
+        FUNCTION('YEAR', t.transactionDate),
+        '-',
+        FUNCTION('MONTH', t.transactionDate)
+)
+""")
+    List<RevenuePointDTO> adminMonthlyRevenue(
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to
+    );
+
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT('',FUNCTION('YEAR', t.transactionDate)),
+    SUM(t.amount*1.0)
+)
+FROM Transaction t
+WHERE t.agent.id = :agentId
+AND t.transactionDate BETWEEN :from AND :to
+GROUP BY FUNCTION('YEAR', t.transactionDate)
+ORDER BY FUNCTION('YEAR', t.transactionDate)
+""")
+    List<RevenuePointDTO> agentYearlyRevenue(
+            Long agentId,
+            LocalDate from,
+            LocalDate to
+    );
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT('Week ', CAST(FUNCTION('WEEK', t.transactionDate) AS string)),
+    SUM(t.amount*1.0)
+)
+FROM Transaction t
+WHERE t.agent.id = :agentId
+AND t.transactionDate BETWEEN :from AND :to
+GROUP BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('WEEK', t.transactionDate)
+ORDER BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('WEEK', t.transactionDate)
+""")
+    List<RevenuePointDTO> agentWeeklyRevenue(
+            @Param("agentId") Long agentId,
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to
+    );
+
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT(FUNCTION('YEAR', t.transactionDate),
+    '-',
+    FUNCTION('MONTH', t.transactionDate)
+    ),
+    SUM(t.amount*1.0)
+)
+FROM Transaction t
+WHERE t.agent.id = :agentId
+AND t.transactionDate BETWEEN :from AND :to
+GROUP BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('MONTH', t.transactionDate)
+ORDER BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('MONTH', t.transactionDate)
+""")
+    List<RevenuePointDTO> agentMonthlyRevenue(
+            Long agentId,
+            LocalDate from,
+            LocalDate to
+    );
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT('Week ', CAST(FUNCTION('WEEK', t.transactionDate) AS string)),
+    SUM(t.amount*1.0)
+)
+FROM Transaction t
+WHERE t.agent.office.id = :officeId
+AND t.transactionDate BETWEEN :from AND :to
+GROUP BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('WEEK', t.transactionDate)
+ORDER BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('WEEK', t.transactionDate)
+""")
+    List<RevenuePointDTO> officeWeeklyRevenue(
+            @Param("officeId") Long officeId,
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to
+    );
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT(FUNCTION('YEAR', t.transactionDate),
+    '-',
+    FUNCTION('MONTH', t.transactionDate)
+    ),
+    SUM(t.amount*1.0)
+)
+FROM Transaction t
+WHERE t.agent.office.id = :officeId
+AND t.transactionDate BETWEEN :from AND :to
+GROUP BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('MONTH', t.transactionDate)
+ORDER BY FUNCTION('YEAR', t.transactionDate),
+         FUNCTION('MONTH', t.transactionDate)
+""")
+    List<RevenuePointDTO> officeMonthlyRevenue(
+            Long officeId,
+            LocalDate from,
+            LocalDate to
+    );
+
+    @Query("""
+SELECT new com.RealState.Project.DTO.RevenuePointDTO(
+    CONCAT('',FUNCTION('YEAR', t.transactionDate)),
+    SUM(t.amount*1.0)
+)
+FROM Transaction t
+WHERE t.agent.office.id = :officeId
+AND t.transactionDate BETWEEN :from AND :to
+GROUP BY FUNCTION('YEAR', t.transactionDate)
+ORDER BY FUNCTION('YEAR', t.transactionDate)
+""")
+    List<RevenuePointDTO> officeYearlyRevenue(
+            Long officeId,
+            LocalDate from,
+            LocalDate to
+    );
+
+
+
 }
 
 

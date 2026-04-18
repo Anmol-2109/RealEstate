@@ -70,10 +70,10 @@ VALUES
 INSERT INTO listing_token
 (list_type,price,description,status,property_id,agent_id)
 VALUES
-('SELL',5000000,'Luxury Flat','ACTIVE',1,2),
-('RENT',20000,'Nice Apartment','ACTIVE',2,2),
-('SELL',7500000,'Villa','ACTIVE',3,2),
-('SELL',3500000,'2BHK','ACTIVE',4,2);
+('SELL',5000000,'Luxury Flat','INACTIVE',1,2),
+('RENT',20000,'Nice Apartment','INACTIVE',2,2),
+('SELL',7500000,'Villa','INACTIVE',3,2),
+('SELL',3500000,'2BHK','INACTIVE',4,2);
 
 INSERT INTO performance
 (deals,total_sales,score,user_rating,deals_left,agent_id)

@@ -35,6 +35,7 @@ public class AuthService {
     private final UserProfileRepository userProfileRepository;
     private final AgentRepository agentRepository;
     private final OfficeRepository officeRepository;
+    private final PerformanceRepository performanceRepository;
 
     private User signupInternal(SignupRequestDTO dto, AuthProviderType providerType, String providerId) {
         User user = userRepository.findByUsername(dto.getUsername()).orElse(null);
@@ -162,6 +163,18 @@ public class AuthService {
                             .build();
 
             agentRepository.save(agent);
+
+            Performance performance =
+                    Performance.builder()
+                            .total_deals(0)
+                            .totalSales(0)
+                            .score(0f)
+                            .user_rating(0f)
+                            .deals_left(0)
+                            .agent(agent)
+                            .build();
+
+            performanceRepository.save(performance);
         }
 
         return new SignupResponseDTO(

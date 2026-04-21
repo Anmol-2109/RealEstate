@@ -241,11 +241,22 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
             throw new RuntimeException("Cannot leave a sold listing");
         }
 
-        // Remove agent
-        listing.setAgent(null);
 
-        // Update status
-//        listing.setStatus(Status.INACTIVE); // or AVAILABLE (your choice)
+
+        Performance performance =
+                performanceRepository
+                        .findByAgent(agent)
+                        .orElseThrow(
+                                ()-> new RuntimeException("Agent Performance Not Found")
+                        );
+
+        performance.setTotal_deals(
+                performance.getTotal_deals() + 1
+        );
+
+        performanceRepository.save(performance);
+
+        listing.setAgent(null);
 
         ListingToken saved = listingTokenRepository.save(listing);
 

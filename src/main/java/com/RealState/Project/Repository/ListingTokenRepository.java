@@ -5,6 +5,7 @@ import com.RealState.Project.Entity.Type.Listing_type;
 import com.RealState.Project.Entity.Type.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -98,4 +99,42 @@ public interface ListingTokenRepository extends JpaRepository<ListingToken,Long>
     List<ListingToken> findListingsInTransactionsByAgent(Agent agent);
 
     ListingToken findByPid(Property property);
+
+    List<ListingToken> findByPidOwnerAndStatus(User owner, Status status);
+
+    @Query("""
+SELECT DISTINCT t.token
+FROM Transaction t
+WHERE t.buyer = :user
+   OR t.seller = :user
+""")
+    List<ListingToken> findListingsInTransactionsByUser(
+            @Param("user") User user
+    );
+
+
+    @Query("""
+SELECT DISTINCT t.token
+FROM Transaction t
+""")
+    List<ListingToken> findListingsInTransactions();
+
+    @Query("""
+SELECT DISTINCT t.token
+FROM Transaction t
+WHERE t.agent.office = :office
+""")
+    List<ListingToken> findListingsInTransactionsByOffice(
+            @Param("office") Office office
+    );
+
+    @Query("""
+SELECT l
+FROM ListingToken l
+WHERE l.pid.office = :office
+AND l.status = com.RealState.Project.Entity.Type.Status.ACTIVE
+""")
+    List<ListingToken> findActiveListingsByOffice(
+            @Param("office") Office office
+    );
 }

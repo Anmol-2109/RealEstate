@@ -45,4 +45,8 @@ public class Transaction {
     @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
     @JoinColumn(name = "buyer_id")
     private User buyer;
+
+    @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
+    @JoinColumn(name = "seller_id")
+    private User seller;
 }

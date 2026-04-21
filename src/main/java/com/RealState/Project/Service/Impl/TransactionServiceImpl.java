@@ -28,6 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
     public final SecurityUtil securityUtil;
     private final TransactionStrategyFactory strategyFactory;
     private final PropertyRepository propertyRepository;
+    private final PerformanceRepository performanceRepository;
 
     @Override
     public TransactionDecrriptionDTO createTransaction(
@@ -62,11 +63,37 @@ public class TransactionServiceImpl implements TransactionService {
                 .mode(request.getMode())
                 .agent(agent)
                 .buyer(buyer)
+                .seller(owner)
                 .token(token)
                 .build();
 
         Transaction saved =
                 transactionRepository.save(transaction);
+
+        Performance performance =
+                performanceRepository
+                        .findByAgent(agent)
+                        .orElseThrow(
+                                ()-> new RuntimeException("Agent Performance Not Found")
+                        );
+
+        performance.setTotal_deals(
+                performance.getTotal_deals() + 1
+        );
+
+        performance.setTotalSales(
+                performance.getTotalSales()
+                        + (int) request.getAmount()
+        );
+
+// simple score formula
+        float score =
+                performance.getTotal_deals() * 10f
+                        + performance.getUser_rating() * 5f;
+
+        performance.setScore(score);
+
+        performanceRepository.save(performance);
 
         // ===================================
         // CHANGE OWNER ONLY FOR SELL
@@ -160,7 +187,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 
         // ---------- Seller ----------
-        User owner = t.getToken().getPid().getOwner();
+        User owner = t.getSeller();
 
         UserForOtherTableResponseDTO sellerDTO =
                 new UserForOtherTableResponseDTO(

@@ -189,17 +189,18 @@ ORDER BY p.score DESC, p.user_rating DESC
 
 
     @Query("""
-    SELECT t
-    FROM Transaction t
-    JOIN FETCH t.agent a
-    JOIN FETCH a.user u
-    JOIN FETCH u.userProfile
-    JOIN FETCH t.buyer b
-    JOIN FETCH b.userProfile
-    JOIN FETCH t.token lt
-    JOIN FETCH lt.pid p
-    JOIN FETCH p.owner
-    """)
+SELECT t
+FROM Transaction t
+JOIN FETCH t.agent a
+JOIN FETCH a.user u
+JOIN FETCH u.userProfile
+JOIN FETCH t.buyer b
+JOIN FETCH b.userProfile
+JOIN FETCH t.seller s
+JOIN FETCH s.userProfile
+JOIN FETCH t.token lt
+JOIN FETCH lt.pid p
+""")
     List<Transaction> findAllWithDetails();
 
 
@@ -227,11 +228,11 @@ JOIN FETCH a.user au
 JOIN FETCH au.userProfile
 JOIN FETCH t.buyer b
 JOIN FETCH b.userProfile
+JOIN FETCH t.seller s
+JOIN FETCH s.userProfile
 JOIN FETCH t.token lt
 JOIN FETCH lt.pid p
-JOIN FETCH p.owner o
-JOIN FETCH o.userProfile
-WHERE p.owner = :user
+WHERE t.seller = :user
 """)
     List<Transaction> findBySellerWithDetails(User user);
 

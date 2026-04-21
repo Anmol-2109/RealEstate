@@ -99,8 +99,8 @@ VALUES
 
 
 INSERT INTO transaction
-(amount,type,mode,agent_id,token_id,buyer_id)
+(amount,type,mode,agent_id,token_id,buyer_id,seller_id)
 VALUES
-(5000000,'FULL','ONLINE',2,1,1),
-(20000,'ADVANCE','CARD',2,2,4),
-(7500000,'ADVANCE','ONLINE',2,3,5);
+(5000000,'FULL','ONLINE',2,1,1,7),
+(20000,'ADVANCE','CARD',2,2,4,3),
+(7500000,'ADVANCE','ONLINE',2,3,5,6);

@@ -260,11 +260,9 @@ public class AdminServiceImpl implements AdminService {
                 )
 
                 .sellerName(
-                        t.getToken()
-                                .getPid()
-                                .getOwner()
-                                .getUserProfile()
-                                .getName()
+                         t.getSeller()
+                        .getUserProfile()
+                        .getName()
                 )
 
                 .propertyCity(

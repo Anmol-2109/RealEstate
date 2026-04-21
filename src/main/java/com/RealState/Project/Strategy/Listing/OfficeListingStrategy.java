@@ -30,19 +30,16 @@ public class OfficeListingStrategy implements ListingAccessStrategy {
                                 new RuntimeException("Office not found")
                         );
 
-        // =====================================
+
         // ACTIVE listings of this office
-        // =====================================
         List<ListingToken> activeListings =
                 listingRepository.findActiveListingsByOffice(
                         office
                 );
 
-        // =====================================
         // INACTIVE listings that were transacted
         // where transaction agent belongs to
         // this office
-        // =====================================
         List<ListingToken> transactedListings =
                 listingRepository
                         .findListingsInTransactionsByOffice(

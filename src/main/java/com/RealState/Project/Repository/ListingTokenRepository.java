@@ -105,8 +105,7 @@ public interface ListingTokenRepository extends JpaRepository<ListingToken,Long>
     @Query("""
 SELECT DISTINCT t.token
 FROM Transaction t
-WHERE t.buyer = :user
-   OR t.seller = :user
+WHERE t.seller = :user
 """)
     List<ListingToken> findListingsInTransactionsByUser(
             @Param("user") User user

@@ -251,11 +251,11 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
                         );
         if(performance.getDeals_left()>0) {
             performance.setDeals_left(
-                    performance.getDeals_left() - 1
+                    performance.getDeals_left() + 1
             );
         }
 
-        if(performance.getScore()>5){
+        if(performance.getScore()>=5){
             performance.setScore(
                     performance.getScore() - 5
             );

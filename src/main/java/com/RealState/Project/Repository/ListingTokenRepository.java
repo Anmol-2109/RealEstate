@@ -136,4 +136,6 @@ AND l.status = com.RealState.Project.Entity.Type.Status.ACTIVE
     List<ListingToken> findActiveListingsByOffice(
             @Param("office") Office office
     );
+
+    ListingToken findByPidAndStatus(Property property, Listing_type listingType);
 }

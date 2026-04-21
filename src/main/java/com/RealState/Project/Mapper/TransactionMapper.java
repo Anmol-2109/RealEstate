@@ -36,16 +36,11 @@ public class TransactionMapper {
         // Seller (owner)
 
         dto.setSellerId(
-                t.getToken()
-                        .getPid()
-                        .getOwner()
-                        .getId()
+                t.getSeller().getId()
         );
 
         dto.setSellerName(
-                t.getToken()
-                        .getPid()
-                        .getOwner()
+                t.getSeller()
                         .getUserProfile()
                         .getName()
         );

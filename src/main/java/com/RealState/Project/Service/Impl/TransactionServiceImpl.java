@@ -95,9 +95,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         performanceRepository.save(performance);
 
-        // ===================================
+
         // CHANGE OWNER ONLY FOR SELL
-        // ===================================
         if(token.getListingType() == Listing_type.SELL){
 
             property.setOwner(buyer);

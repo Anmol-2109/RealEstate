@@ -87,11 +87,12 @@ public class TransactionServiceImpl implements TransactionService {
         );
 
 // simple score formula
-        float score =
-                performance.getTotal_deals() * 10f
-                        + performance.getUser_rating() * 5f;
 
-        performance.setScore(score);
+        if(performance.getScore()<= 95) {
+            performance.setScore(
+                    performance.getScore() + 5
+            );
+        }
 
         performanceRepository.save(performance);
 
@@ -120,9 +121,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         return convertToDTO(saved);
     }
+
     @Override
-
-
     public List<TransactionDTO> getTransactions() {
         User user = securityUtil.getCurrentUser();
 

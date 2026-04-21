@@ -249,10 +249,17 @@ public class ListingPropertyServiceImpl implements ListingPropertyServices {
                         .orElseThrow(
                                 ()-> new RuntimeException("Agent Performance Not Found")
                         );
+        if(performance.getDeals_left()>0) {
+            performance.setDeals_left(
+                    performance.getDeals_left() - 1
+            );
+        }
 
-        performance.setTotal_deals(
-                performance.getTotal_deals() + 1
-        );
+        if(performance.getScore()>5){
+            performance.setScore(
+                    performance.getScore() - 5
+            );
+        }
 
         performanceRepository.save(performance);
 
